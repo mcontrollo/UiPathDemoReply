@@ -10,7 +10,7 @@ pipeline {
         UiPathPack (
           outputPath: "/var/jenkins_home/UiPathDemoReply/_out/${env.BUILD_NUMBER}",
           projectJsonPath: "/var/jenkins_home/UiPathDemoReply/project.json",
-          version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"]
+          version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
           useOrchestrator: false,
           traceLoggingLevel: "Information",
           orchestratorAddress: "https://10.41.11.194",
