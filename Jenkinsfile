@@ -12,7 +12,7 @@ pipeline {
           projectJsonPath: "/var/jenkins_home/UiPathDemoReply/project.json",
           version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
           useOrchestrator: false,
-          traceLoggingLevel: "Information",
+          traceLevel: "Information",
           orchestratorAddress: "https://10.41.11.194",
           orchestratorTenant: "Default",
           credentials: [$class: 'UserPassAuthenticationEntry', credentialsId: “uipath-admin”]
