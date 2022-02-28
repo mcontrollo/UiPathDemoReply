@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent windows
   environment {
       MAJOR = '1'
       MINOR = '0'
