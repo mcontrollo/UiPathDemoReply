@@ -1,9 +1,5 @@
 pipeline {
-  agent {
-    node {
-      label 'jenkins-uipath-demo-jenkins-agent'
-    }
-  }
+  agent any
   environment {
       MAJOR = '1'
       MINOR = '0'
