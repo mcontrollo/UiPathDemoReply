@@ -1,5 +1,9 @@
 pipeline {
-  agent windows
+  agent {
+    node {
+      label 'windows'
+    }
+  }
   environment {
       MAJOR = '1'
       MINOR = '0'
