@@ -25,7 +25,7 @@ pipeline {
         }
       } 
     }
-    stage ('Build') {
+    stage ('Deploy') {
       steps {
         script {
           try {
@@ -44,20 +44,6 @@ pipeline {
           }
         }
       } 
-    }
-    stage ('Deploy') {
-      steps {
-        UiPathDeploy (
-          credentials: UserPass('uipath-admin'), 
-          entryPointPaths: 'Main.xaml', 
-          folderName: 'Shared', 
-          orchestratorAddress: 'https://10.41.11.194', 
-          orchestratorTenant: 'Default', 
-          packagePath: '/var/jenkins_home/UiPathDemoReply/_out/${env.BUILD_NUMBER}', 
-          traceLevel: 'Information',
-          environments: ''
-        )
-      }
     }
   }
 }
