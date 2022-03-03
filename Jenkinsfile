@@ -43,7 +43,26 @@ pipeline {
               echo err.getMessage()
           }
         }
-      } 
+      }
+      stage ('Deploy 2') {
+        steps {
+          script {
+            try {
+              UiPathDeploy (
+                credentials: UserPass('uipath-admin'), 
+                entryPointPaths: 'Main.xaml', 
+                folderName: 'Shared', 
+                orchestratorAddress: 'https://10.41.11.194', 
+                orchestratorTenant: 'Default', 
+                packagePath: 'this_path/does_not/exist/${env.BUILD_NUMBER}', 
+                traceLevel: 'Information',
+                environments: ''
+              )
+          } catch (err) {
+              echo err.getMessage()
+          }
+        }
+      }
     }
   }
 }
