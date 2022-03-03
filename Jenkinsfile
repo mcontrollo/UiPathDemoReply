@@ -30,37 +30,17 @@ pipeline {
         script {
           try {
               UiPathDeploy (
-                credentials: UserPass('uipath-admin'), 
+                credentials: [$class: 'UserPassAuthenticationEntry', credentialsId: “uipath-admin”], 
                 entryPointPaths: 'Main.xaml', 
                 folderName: 'Shared', 
                 orchestratorAddress: 'https://10.41.11.194', 
                 orchestratorTenant: 'Default', 
-                packagePath: '${WORKSPACE}\\_out\\${env.BUILD_NUMBER}', 
+                packagePath: 'C:\Users\jenkins\Work\workspace\myFirstMultibranch_main\_out', 
                 traceLevel: 'Information',
                 environments: ''
               )
           } catch (err) {
               echo err.getMessage()
-          }
-        }
-      }
-    }
-    stage ('Deploy 2') {
-      steps {
-        script {
-          try {
-            UiPathDeploy (
-              credentials: UserPass('uipath-admin'), 
-              entryPointPaths: 'Main.xaml', 
-              folderName: 'Shared', 
-              orchestratorAddress: 'https://10.41.11.194', 
-              orchestratorTenant: 'Default', 
-              packagePath: 'this_path/does_not/exist/${env.BUILD_NUMBER}', 
-              traceLevel: 'Information',
-              environments: ''
-            )
-        } catch (err) {
-            echo err.getMessage()
           }
         }
       }
