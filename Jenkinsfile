@@ -28,7 +28,8 @@ pipeline {
           orchestratorAddress: 'https://10.41.11.194', 
           orchestratorTenant: 'Default', 
           packagePath: '/var/jenkins_home/UiPathDemoReply/_out/${env.BUILD_NUMBER}', 
-          traceLevel: 'Information'
+          traceLevel: 'Information',
+          environments: ''
         )
       }
     }
