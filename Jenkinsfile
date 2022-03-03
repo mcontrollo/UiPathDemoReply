@@ -35,7 +35,7 @@ pipeline {
                 folderName: 'Shared', 
                 orchestratorAddress: 'https://10.41.11.194', 
                 orchestratorTenant: 'Default', 
-                packagePath: 'C:\Users\jenkins\Work\workspace\myFirstMultibranch_main\_out', 
+                packagePath: 'C:\\Users\\jenkins\\Work\\workspace\\myFirstMultibranch_main\\_out', 
                 traceLevel: 'Information',
                 environments: ''
               )
