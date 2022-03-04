@@ -9,7 +9,7 @@ pipeline {
       steps {
         script {
           UiPathPack (
-            outputPath: "/var/jenkins_home/UiPathDemoReply/_out/${env.BUILD_NUMBER}",
+            outputPath: "${WORKSPACE}\\out\\${env.BUILD_NUMBER}",
             projectJsonPath: "/var/jenkins_home/UiPathDemoReply/project.json",
             version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
             useOrchestrator: false,
@@ -30,7 +30,7 @@ pipeline {
             folderName: 'Shared', 
             orchestratorAddress: 'https://10.41.11.194', 
             orchestratorTenant: 'Default', 
-            packagePath: 'C:\\Users\\jenkins\\Work\\workspace\\myFirstMultibranch_main\\_out', 
+            packagePath: '${WORKSPACE}\\out\\${env.BUILD_NUMBER}', 
             traceLevel: 'Information',
             environments: ''
           )
