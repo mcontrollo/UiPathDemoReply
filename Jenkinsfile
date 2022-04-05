@@ -11,7 +11,7 @@ pipeline {
           try {
             UiPathPack (
               outputPath: "${WORKSPACE}\\out\\${env.BUILD_NUMBER}",
-              projectJsonPath: "/var/jenkins_home/UiPathDemoReply/project.json",
+              projectJsonPath: "${WORKSPACE}\\project.json",
               version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
               useOrchestrator: false,
               traceLevel: "Information",
