@@ -42,6 +42,7 @@ credentials: Token(accountName: 'demoobkzieep', credentialsId: 'uipath-cloud-api
   post {
     always {
         echo "Package built stored in ${WORKSPACE}\\out\\${env.BUILD_NUMBER}"
+        echo "new"
     }
   }
 }
