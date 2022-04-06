@@ -30,7 +30,7 @@ pipeline {
         script {
           try {
               UiPathDeploy ( 
-UiPathDeploy credentials: Token(accountName: 'demoobkzieep', credentialsId: 'uipath-cloud-api-access'), entryPointPaths: 'Main.xaml', environments: '', folderName: 'Shared', orchestratorAddress: 'https://cloud.uipath.com/', orchestratorTenant: 'DefaultTenant', packagePath: '${WORKSPACE}\\out\\${env.BUILD_NUMBER}', traceLevel: 'Information'
+credentials: Token(accountName: 'demoobkzieep', credentialsId: 'uipath-cloud-api-access'), entryPointPaths: 'Main.xaml', environments: '', folderName: 'Shared', orchestratorAddress: 'https://cloud.uipath.com/', orchestratorTenant: 'DefaultTenant', packagePath: '${WORKSPACE}\\out\\${env.BUILD_NUMBER}', traceLevel: 'Information'
 )
           } catch (err) {
               echo err.getMessage()
