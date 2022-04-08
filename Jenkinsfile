@@ -11,7 +11,7 @@ pipeline {
           try {
             UiPathPack (
               outputPath: "${WORKSPACE}\\out\\${env.BUILD_NUMBER}",
-              projectJsonPath: "/var/jenkins_home/UiPathDemoReply/project.json",
+              projectJsonPath: "${WORKSPACE}\\project.json",
               version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
               useOrchestrator: false,
               traceLevel: "Information",
@@ -29,16 +29,9 @@ pipeline {
       steps {
         script {
           try {
-              UiPathDeploy (
-                credentials: [$class: 'UserPassAuthenticationEntry', credentialsId: "uipath-admin"], 
-                entryPointPaths: 'Main.xaml', 
-                folderName: 'Shared', 
-                orchestratorAddress: 'https://10.41.11.194', 
-                orchestratorTenant: 'Default', 
-                packagePath: "${WORKSPACE}\\out\\${env.BUILD_NUMBER}", 
-                traceLevel: 'Information',
-                environments: ''
-              )
+              UiPathDeploy ( 
+credentials: Token(accountName: 'demoobkzieep', credentialsId: 'uipath-cloud-api-access'), entryPointPaths: 'Main.xaml', environments: '', folderName: 'Shared', orchestratorAddress: 'https://cloud.uipath.com/', orchestratorTenant: 'DefaultTenant', packagePath: "${WORKSPACE}\\out\\${env.BUILD_NUMBER}", traceLevel: 'Information'
+)
           } catch (err) {
               echo err.getMessage()
           }
@@ -49,6 +42,7 @@ pipeline {
   post {
     always {
         echo "Package built stored in ${WORKSPACE}\\out\\${env.BUILD_NUMBER}"
+        echo "new"
     }
   }
 }
