@@ -1,0 +1,76 @@
+pipeline {
+  agent any
+  environment {
+      MAJOR = '1'
+      MINOR = '0'
+      UIPATH_ORCH_URL = "https://cloud.uipath.com/"
+      UIPATH_ORCH_LOGICAL_NAME = "demoobkzieep"
+      UIPATH_ORCH_TENANT_NAME = "DefaultTenant"
+      UIPATH_ORCH_FOLDER_NAME = "Shared"
+  }
+  stages {
+    stage ('Build Test') {
+      steps {
+        script {
+          try {
+            UiPathPack (
+              outputPath: "${WORKSPACE}\\test\\${env.BUILD_NUMBER}",
+              outputType: 'Tests',
+              projectJsonPath: "${WORKSPACE}\\project.json",
+              version: [$class: 'ManualVersionEntry', version: "${MAJOR}.${MINOR}.${env.BUILD_NUMBER}"],
+              useOrchestrator: true,
+              traceLevel: "Information",
+              orchestratorAddress: "${UIPATH_ORCH_URL}",
+              orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
+              credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'uipath-cloud-api-access')
+            )
+          } catch (err) {
+              echo err.getMessage()
+          }
+        }
+      } 
+    }
+    stage ('Deploy Test') {
+      steps {
+        script {
+          try {
+              UiPathDeploy ( 
+                credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'uipath-cloud-api-access'), 
+                entryPointPaths: 'Main.xaml', 
+                environments: '', 
+                folderName: "${UIPATH_ORCH_FOLDER_NAME}", 
+                orchestratorAddress: "${UIPATH_ORCH_URL}", 
+                orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}", 
+                packagePath: "${WORKSPACE}\\test\\${env.BUILD_NUMBER}", 
+                traceLevel: 'Information',
+                entryPointPaths: 'Main.xaml'
+              )
+          } catch (err) {
+              echo err.getMessage()
+          }
+        }
+      }
+    }
+    stage ('Run Test') {
+      steps {
+        script {
+          try {
+              UiPathTest (
+                testTarget: [$class: 'TestSetEntry', testSet: "MyFirstTestSet"],
+                orchestratorAddress: "${UIPATH_ORCH_URL}",
+                orchestratorTenant: "${UIPATH_ORCH_TENANT_NAME}",
+                folderName: "${UIPATH_ORCH_FOLDER_NAME}",
+                timeout: 10000,
+                traceLevel: 'Information',
+                testResultsOutputPath: "result.xml",
+                credentials: Token(accountName: "${UIPATH_ORCH_LOGICAL_NAME}", credentialsId: 'uipath-cloud-api-access'), 
+                parametersFilePath: ''
+					    )
+          } catch (err) {
+              echo err.getMessage()
+          }
+        }
+      }
+    }
+  }
+}
